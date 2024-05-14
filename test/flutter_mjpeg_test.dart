@@ -19,7 +19,30 @@ void main() {
   });
 
   //streamController.add([_trigger, _soi, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, _trigger, _eoi]);
-  streamController.add([23, 23, _trigger, _soi, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, _trigger]);
+  streamController.add([
+    23,
+    23,
+    _trigger,
+    _soi,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    _trigger
+  ]);
   streamController.add([_eoi]);
 
   test('adds one to input values', () {});
@@ -35,18 +58,20 @@ void main() {
 class JpegSplitter extends StreamTransformerBase<List<int>, List<int>> {
   const JpegSplitter();
 
-  ChunkedConversionSink<List<int>> startChunkedConversion(Sink<List<int>> sink) {
+  ChunkedConversionSink<List<int>> startChunkedConversion(
+      Sink<List<int>> sink) {
     return _JpegSplitterSink(sink as ChunkedConversionSink<List<int>?>);
   }
 
   Stream<List<int>> bind(Stream<List<int>> stream) {
-    return Stream<List<int>>.eventTransformed(stream, (EventSink<List<int>> sink) {
+    return Stream<List<int>>.eventTransformed(stream,
+        (EventSink<List<int>> sink) {
       return _JpegSplitterEventSink(sink);
     });
   }
 }
 
-class _JpegSplitterSink extends ChunkedConversionSink<List<int>> {
+class _JpegSplitterSink implements ChunkedConversionSink<List<int>> {
   final ChunkedConversionSink<List<int>?> _sink;
 
   /// The carry-over from the previous chunk.
@@ -97,7 +122,8 @@ class _JpegSplitterSink extends ChunkedConversionSink<List<int>> {
   }
 }
 
-class _JpegSplitterEventSink extends _JpegSplitterSink implements EventSink<List<int>> {
+class _JpegSplitterEventSink extends _JpegSplitterSink
+    implements EventSink<List<int>> {
   final EventSink<List<int>> _eventSink;
 
   _JpegSplitterEventSink(EventSink<List<int>> eventSink)
